@@ -14,6 +14,7 @@ Designed for **Linux (Lubuntu/XFCE)** environments and optimized for low-end mac
 - Safe fallback if dependencies are missing
 - Files are saved in `~/Videos/` with timestamps
 - Simple final dialog: "Open folder" or "Play video"
+- Automatically downloads the app icon if missing and places it in the correct folder (`~/.local/share/icons/`).
 
 ## Requirements
 
