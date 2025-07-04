@@ -3,6 +3,10 @@
 VERSION="1.0"
 REPO_URL="https://raw.githubusercontent.com/hmartinov/RecVid/main"
 SCRIPT_URL="https://github.com/hmartinov/RecVid/releases/latest/download/recvid.sh"
+DESKTOP_URL="https://github.com/hmartinov/RecVid/releases/latest/download/recvid.desktop"
+SCRIPT_PATH="$HOME/bin/recvid.sh"
+DESKTOP_PATH="$HOME/.local/share/applications/recvid.desktop"
+
 SCRIPT_PATH="$HOME/bin/recvid.sh"
 SAVE_DIR="$HOME/Videos"
 
@@ -22,14 +26,19 @@ version_is_newer() {
 }
 
 if [[ -n "$REMOTE_VERSION" ]] && version_is_newer "$VERSION" "$REMOTE_VERSION"; then
-    zenity --question \
-        --title="Налична е нова версия" \
-        --text="Имате версия $VERSION.\nНалична е нова версия: $REMOTE_VERSION\n\nИскате ли да я изтеглите сега?"
+    zenity --question         --title="Налична е нова версия"         --text="Имате версия $VERSION.\nНалична е нова версия: $REMOTE_VERSION\n\nИскате ли да я изтеглите сега?"
     if [[ $? -eq 0 ]]; then
         TMPFILE=$(mktemp)
         if curl -fsSL "$SCRIPT_URL" -o "$TMPFILE"; then
             mv "$TMPFILE" "$SCRIPT_PATH"
             chmod +x "$SCRIPT_PATH"
+            # Сваляне и на .desktop файла
+            TMPDESKTOP=$(mktemp)
+            if curl -fsSL "$DESKTOP_URL" -o "$TMPDESKTOP"; then
+                mkdir -p "$(dirname "$DESKTOP_PATH")"
+                mv "$TMPDESKTOP" "$DESKTOP_PATH"
+                chmod +x "$DESKTOP_PATH"
+            fi
             zenity --info --title="Обновено" --text="Скриптът беше обновен успешно до версия $REMOTE_VERSION."
             exec "$SCRIPT_PATH" "$@"
             exit 0
