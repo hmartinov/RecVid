@@ -6,6 +6,8 @@ SCRIPT_URL="https://github.com/hmartinov/RecVid/releases/latest/download/recvid.
 DESKTOP_URL="https://github.com/hmartinov/RecVid/releases/latest/download/recvid.desktop"
 SCRIPT_PATH="$HOME/bin/recvid.sh"
 DESKTOP_PATH="$HOME/.local/share/applications/recvid.desktop"
+ICON_URL="https://github.com/hmartinov/PDF-to-JPG/releases/latest/download/recvid-icon.png"
+ICON_PATH="$HOME/.local/share/icons/recvid-icon.png"
 
 SCRIPT_PATH="$HOME/bin/recvid.sh"
 SAVE_DIR="$HOME/Videos"
@@ -46,6 +48,16 @@ if [[ -n "$REMOTE_VERSION" ]] && version_is_newer "$VERSION" "$REMOTE_VERSION"; 
             zenity --error --title="Грешка" --text="Неуспешно изтегляне на новата версия."
             rm -f "$TMPFILE"
         fi
+    fi
+fi
+
+# Сваляне на иконата, ако липсва локално
+if [[ ! -f "$ICON_PATH" ]]; then
+    TMPICON=$(mktemp)
+    if curl -fsSL "$ICON_URL" -o "$TMPICON"; then
+        mkdir -p "$(dirname "$ICON_PATH")"
+        mv "$TMPICON" "$ICON_PATH"
+        chmod +r "$ICON_PATH"
     fi
 fi
 

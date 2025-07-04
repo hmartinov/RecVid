@@ -2,7 +2,7 @@
 Name=RecVid
 Comment=Запис на екрана и системния звук
 Exec=/home/$USER/bin/recvid.sh
-Icon=video-display
+Icon=recvid-icon
 Terminal=false
 Type=Application
 Categories=AudioVideo;Video;
