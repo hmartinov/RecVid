@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=RecVid
 Comment=Запис на екрана и системния звук
-Exec=/home/$USER/bin/recvid.sh
+Exec=sh -c '~/bin/recvid.sh'
 Icon=recvid-icon
 Terminal=false
 Type=Application
